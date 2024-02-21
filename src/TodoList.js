@@ -4,17 +4,15 @@ import { useState } from 'react';
 const TodoList = ({ todos, setTodos }) => {
     const [edit, setEdit] = useState(null)
     const [editText, setEditText] = useState('')
-
     const { Text } = Typography;
     const { Item } = List;
 
     const removeTodo = (id) => {
         setTodos(todos.filter(todo => todo.id !== id))
     }
-
     const toggleTodo = (id) => {
         setTodos(todos.map(todo => {
-            if (todo.id = id) {
+            if (todo.id === id) {
                 todo.completed = !todo.completed
             }
             return todo
