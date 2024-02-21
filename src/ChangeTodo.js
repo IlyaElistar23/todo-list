@@ -1,13 +1,14 @@
 import { List, Input, Button } from 'antd'
-import { useContext } from 'react';
-import TodoContext from './TodoContext';
 
-const ChangeTodo = () => {
+const ChangeTodo = ({ title, id, completed, visible }) => {
     const { Item } = List;
-    const dispatch = useContext(TodoContext)
+    // const {dispatch, state} = useContext(TodoContext)
     return (
         <Item>
-            <Input/>
+            <Input
+                value={title}
+                key={id}
+            />
             <Button>Update</Button>
         </Item>
     )

@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid"
-import ChangeTodo from "./ChangeTodo"
 
 export default function (state, action) {
     switch (action.type) {
@@ -22,7 +21,7 @@ export default function (state, action) {
         case 'change':
             return state.map(todo => {
                 if (todo.id === action.title) {
-                    return <ChangeTodo />
+                    return 
                 }
             })
         case 'remove':
