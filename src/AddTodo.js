@@ -1,8 +1,9 @@
-import { Input, Button, Typography } from 'antd'
+import { Input, Button, ConfigProvider } from 'antd'
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'
+import withLogger from './withLogger';
 
-const AddTodo = ({ todos, setTodos }) => {
+const AddTodo = ({ todos, setTodos, addMessage }) => {
     const [todoTitle, setTodoTitle] = useState('')
 
     const addTodo = () => {
@@ -12,21 +13,81 @@ const AddTodo = ({ todos, setTodos }) => {
             completed: false,
         }])
         setTodoTitle('')
+        addMessage(todoTitle)
     }
 
-    const { Title } = Typography;
+    const disabledButton = () => {
+        if (todoTitle.length === 0) {
+            return true
+        }
+    }
+
     return (
-        <>
-            <Title>Todo List</Title>
-            <Input
-                placeholder='Enter your task'
-                value={todoTitle}
-                onChange={(event) => setTodoTitle(event.target.value)}
-                onKeyPress={(event) => event.key === 'Enter' && addTodo()}
-            />
-            <Button onClick={() => addTodo()}>Add Task</Button>
-        </>
+        <div className='add-todo'>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        borderRadius: 0,
+                        lineWidth: 2,
+                        colorBorder: '#892ad6',
+                        colorBgContainer: '#21152b',
+                        colorText: 'white',
+                        colorTextPlaceholder: '#aaaaaa',
+                        controlHeightLG: 60,
+                        fontSize: 22,
+                    },
+                    components: {
+                        Input: {
+                            activeShadow: '#892ad6',
+                            activeBorderColor: '#892ad6',
+                            hoverBorderColor: '#892ad6',
+                            hoverBg: '#21152b',
+                        }
+                    }
+                }}
+            >
+                <Input
+                    size='large'
+                    style={{
+                        width: 500,
+                    }}
+                    placeholder='Enter your task'
+                    value={todoTitle}
+                    onChange={(event) => setTodoTitle(event.target.value)}
+                    onPressEnter={() => {
+                        addTodo()
+                    }}
+                />
+            </ConfigProvider>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        borderRadius: 0,
+                        lineWidth: 2,
+                        colorBorder: '#892ad6',
+                        colorBgContainer: '#892ad6',
+                        colorText: 'white',
+                        controlHeightLG: 60,
+                        colorBgContainerDisabled: '#892ad6'
+                    },
+                    components: {
+                        Button: {
+                            defaultHoverBorderColor: '#892ad6',
+                            defaultHoverColor: 'white',
+                            colorTextDisabled: '#aaaaaa',
+                            contentFontSizeLG: 24
+                        }
+                    }
+                }}
+            >
+                <Button
+                    onClick={() => addTodo()}
+                    size='large'
+                    disabled={disabledButton()}
+                >Add task</Button>
+            </ConfigProvider>
+        </div>
     )
 }
 
-export default AddTodo;
+export default withLogger(AddTodo);
