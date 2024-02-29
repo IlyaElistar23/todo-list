@@ -1,7 +1,7 @@
 import { Input, Button, ConfigProvider } from 'antd'
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'
-import withLogger from './withLogger';
+import withLogger from './HOC/withLogger';
 
 const AddTodo = ({ todos, setTodos, addMessage }) => {
     const [todoTitle, setTodoTitle] = useState('')

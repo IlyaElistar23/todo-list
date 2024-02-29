@@ -1,7 +1,7 @@
 import { Input, Button, Typography, Checkbox, List, ConfigProvider, Flex } from 'antd'
 import { useState } from 'react';
 import { DeleteFilled, EditFilled, SaveFilled } from '@ant-design/icons'
-import withLogger from './withLogger';
+import withLogger from './HOC/withLogger'
 
 const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, activateMessage, editingMessage, messages, clearStorage }) => {
     const [edit, setEdit] = useState(null)

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css';
-import AddTodo from './AddTodo';
-import TodoList from './TodoList';
+import AddTodo from './Components/AddTodo'
+import TodoList from './Components/TodoList';
 import { Button, ConfigProvider, Typography } from 'antd'
 
 function App() {
