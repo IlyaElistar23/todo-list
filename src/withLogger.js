@@ -58,7 +58,7 @@ const withLogger = (Component) => {
         }, [messages])
 
         const clearStorage = () => {
-            localStorage.removeItem('messages')
+            messages.length = 0
         }
         return <Component
             todos={todos}

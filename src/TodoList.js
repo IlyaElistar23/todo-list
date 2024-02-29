@@ -201,6 +201,7 @@ const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, 
                 }}
             >
                 <Button className='console' type='link' onClick={() => consoleMessages()}>Console History</Button>
+                <Button className='console' type='link' onClick={() => clearStorage()}>Clear History</Button>
             </ConfigProvider>
         </>
     )
