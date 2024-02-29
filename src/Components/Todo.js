@@ -5,7 +5,7 @@ import { Button, ConfigProvider, Typography } from 'antd'
 
 const Todo = () => {
 
-    const [todos, setTodos] = useState(JSON.parse(localStorage.getItem('todos')))
+    const [todos, setTodos] = useState([])
 
     const { Title } = Typography
 
