@@ -9,6 +9,12 @@ const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, 
     const { Item } = List;
     const { Text } = Typography;
 
+    const disabledSaveButton = () => {
+        if (editText.length === 0 || editText.trim().length !== editText.length) {
+            return true
+        }
+    }
+
     const removeTodo = (id) => {
         setTodos(todos.filter(todo => todo.id !== id))
     }
@@ -101,6 +107,7 @@ const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, 
                                                         saveTodo(todo.id)
                                                         editMessage(todo.title)
                                                     }}
+                                                    disabled={disabledSaveButton()}
                                                     size='large'
                                                     icon={<SaveFilled />}></Button>
                                             </ConfigProvider>
