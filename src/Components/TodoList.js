@@ -13,12 +13,7 @@ const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, 
         setTodos(todos.filter(todo => todo.id !== id))
     }
     const toggleTodo = (id) => {
-        setTodos(todos.map(todo => {
-            if (todo.id === id) {
-                todo.completed = !todo.completed
-            }
-            return todo
-        }))
+        setTodos(todos.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo))
     }
 
     const editTodo = (id, title) => {
@@ -27,12 +22,7 @@ const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, 
     }
 
     const saveTodo = (id) => {
-        setTodos(todos.map(todo => {
-            if (todo.id === id) {
-                todo.title = editText
-            }
-            return todo
-        }))
+        setTodos(todos.map(todo => todo.id === id ? {...todo, title: editText} : todo))
         setEdit(null)
     }
 

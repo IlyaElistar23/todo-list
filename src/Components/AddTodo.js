@@ -16,8 +16,10 @@ const AddTodo = ({ todos, setTodos, addMessage }) => {
         addMessage(todoTitle)
     }
 
+        // const emptyTodo = () => todoTitle.split('').every(letter => letter === ' ')
+
     const disabledButton = () => {
-        if (todoTitle.length === 0) {
+        if (todoTitle.length === 0 || todoTitle.trim().length !== todoTitle.length) {
             return true
         }
     }
