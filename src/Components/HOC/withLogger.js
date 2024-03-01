@@ -8,7 +8,7 @@ const withLogger = (Component) => {
             const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : `${date.getSeconds()}`
             return `${hours}:${minutes}:${seconds}`
         }
-        const [messages, setMessages] = useState(JSON.parse(localStorage.getItem('messages')))
+        const [messages, setMessages] = useState([])
 
         const addMessage = (title) => {
 
