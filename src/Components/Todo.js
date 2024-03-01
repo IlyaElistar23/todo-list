@@ -24,7 +24,7 @@ const Todo = () => {
                         }
                     }}
                 >
-                    <Title>Todo list</Title>
+                    <Title>Todo list (test)</Title>
                 </ConfigProvider>
                 <div className='todo-list'>
                     <AddTodo todos={todos} setTodos={setTodos} />
