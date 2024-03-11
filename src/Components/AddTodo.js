@@ -2,9 +2,19 @@ import { Input, Button, ConfigProvider } from 'antd'
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'
 import withLogger from './HOC/withLogger';
+import axios from 'axios';
 
-const AddTodo = ({ todos, setTodos, addMessage }) => {
+const AddTodo = ({ todos, setTodos, config, addMessage }) => {
     const [todoTitle, setTodoTitle] = useState('')
+    console.log(config);
+    const fetchAdd = async (todos, headers) => {
+        try {
+            const response = await axios.post('https://todo-redev.herokuapp.com/api/todos', todos, headers)
+            console.log('Таска создана: ', response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const addTodo = () => {
         setTodos([...todos, {
@@ -12,11 +22,10 @@ const AddTodo = ({ todos, setTodos, addMessage }) => {
             title: todoTitle,
             completed: false,
         }])
+        fetchAdd(todos, config)
         setTodoTitle('')
         addMessage(todoTitle)
     }
-
-        // const emptyTodo = () => todoTitle.split('').every(letter => letter === ' ')
 
     const disabledButton = () => {
         if (todoTitle.length === 0 || todoTitle.trim().length !== todoTitle.length) {

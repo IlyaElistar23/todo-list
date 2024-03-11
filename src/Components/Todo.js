@@ -2,15 +2,33 @@ import { useState, useEffect } from 'react'
 import AddTodo from './AddTodo'
 import TodoList from './TodoList';
 import { Button, ConfigProvider, Typography } from 'antd'
+import checkAuth from './HOC/checkAuth';
+import axios from 'axios';
 
-const Todo = () => {
+const Todo = ({token}) => {
 
     const [todos, setTodos] = useState([])
 
     const { Title } = Typography
 
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+    }
+
+    const config = { headers }
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('https://todo-redev.herokuapp.com/api/todos', config)
+            console.log('Данные получены: ', response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
+        fetchData()
     }, [todos])
 
     return (
@@ -27,8 +45,8 @@ const Todo = () => {
                     <Title>Todo list</Title>
                 </ConfigProvider>
                 <div className='todo-list'>
-                    <AddTodo todos={todos} setTodos={setTodos} />
-                    <TodoList todos={todos} setTodos={setTodos} />
+                    <AddTodo todos={todos} setTodos={setTodos} config={config}/>
+                    <TodoList todos={todos} setTodos={setTodos} config={config}/>
                 </div>
             </div>
             <ConfigProvider
@@ -47,4 +65,4 @@ const Todo = () => {
 }
 
 
-export default Todo
+export default checkAuth(Todo)

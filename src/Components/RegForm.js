@@ -1,0 +1,380 @@
+import { useForm, Controller } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import { Input, Typography, ConfigProvider, Radio, Flex } from 'antd'
+import axios from 'axios'
+
+const RegForm = () => {
+    const {
+        handleSubmit,
+        control,
+        formState: {
+            errors
+        },
+        reset
+    } = useForm({
+        mode: 'onBlur'
+    })
+
+    const navigate = useNavigate()
+
+    const fetchReg = async (data) => {
+        try {
+            const response = await axios.post('https://todo-redev.herokuapp.com/api/users/register', data)
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const { Text } = Typography
+    const { Group, Button } = Radio
+
+    const onSubmit = (data) => {
+        try {
+            console.log(data);
+            fetchReg(data)
+            reset()
+            navigate('/login')
+        } catch (error) {
+            console.log('Ошибка: ', error);
+        }
+    }
+
+    return (
+        <div className='todo'>
+            <form>
+                <Flex justify='space-between' align='center'>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorText: 'white',
+                                fontSize: 22,
+                            }
+                        }}
+                    >
+                        <Text className='label-reg'>username</Text>
+                    </ConfigProvider>
+                    <Controller
+                        name='username'
+                        control={control}
+                        rules={{
+                            required: 'Поле обязательно для заполнения'
+                        }}
+                        render={({ field }) => (
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        borderRadius: 0,
+                                        lineWidth: 2,
+                                        colorPrimary: '#892ad6',
+                                        colorBorder: '#892ad6',
+                                        colorBgContainer: '#21152b',
+                                        colorText: 'white',
+                                        colorTextPlaceholder: '#5c5c5c',
+                                        controlHeightLG: 60,
+                                        fontSize: 22,
+                                    },
+                                    components: {
+                                        Input: {
+                                            activeShadow: '#892ad6',
+                                            activeBorderColor: '#892ad6',
+                                            hoverBorderColor: '#892ad6',
+                                            hoverBg: '#21152b',
+                                            paddingBlock: 6
+                                        }
+                                    }
+                                }}
+                            >
+                                <Input {...field} placeholder='example' />
+                            </ConfigProvider>
+                        )}
+                    />
+                </Flex>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: '#00b39b',
+                            fontSize: 16
+                        }
+                    }}
+                >
+                    <Text className='error-text'>{errors.username?.message}</Text>
+                </ConfigProvider>
+                <Flex justify='space-between' align='center'>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorText: 'white',
+                                fontSize: 22,
+                            }
+                        }}
+                    >
+                        <Text className='label-reg'>email</Text>
+                    </ConfigProvider>
+                    <Controller
+                        name='email'
+                        control={control}
+                        rules={{
+                            required: 'Поле обязательно для заполнения',
+                            pattern: {
+                                value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                                message: 'Некорректный формат E-mail'
+                            },
+                        }}
+                        render={({ field }) => (
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        borderRadius: 0,
+                                        lineWidth: 2,
+                                        colorPrimary: '#892ad6',
+                                        colorBorder: '#892ad6',
+                                        colorBgContainer: '#21152b',
+                                        colorText: 'white',
+                                        colorTextPlaceholder: '#5c5c5c',
+                                        controlHeightLG: 60,
+                                        fontSize: 22,
+                                        colorWarningBg: 'rgb(33, 21, 43, 0.04)'
+                                    },
+                                    components: {
+                                        Input: {
+                                            activeShadow: '#892ad6',
+                                            activeBorderColor: '#892ad6',
+                                            hoverBorderColor: '#892ad6',
+                                            hoverBg: '#21152b',
+                                            paddingBlock: 6
+                                        }
+                                    }
+                                }}
+                            >
+                                <Input {...field} placeholder='example@example.com' />
+                            </ConfigProvider>
+                        )}
+                    />
+                </Flex>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: '#00b39b',
+                            fontSize: 16
+                        }
+                    }}
+                >
+                    <Text className='error-text'>{errors.email?.message}</Text>
+                </ConfigProvider>
+                <Flex justify='space-between' align='center'>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorText: 'white',
+                                fontSize: 22,
+                            }
+                        }}>
+                        <Text className='label-reg'>password</Text>
+                    </ConfigProvider>
+                    <Controller
+                        name='password'
+                        control={control}
+                        rules={{
+                            required: 'Поле обязательно для заполнения',
+                            minLength: 6,
+                        }}
+                        render={({ field }) => (
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        borderRadius: 0,
+                                        lineWidth: 2,
+                                        colorPrimary: '#892ad6',
+                                        colorBorder: '#892ad6',
+                                        colorBgContainer: '#21152b',
+                                        colorText: 'white',
+                                        colorTextPlaceholder: '#5c5c5c',
+                                        controlHeightLG: 60,
+                                        fontSize: 22,
+                                    },
+                                    components: {
+                                        Input: {
+                                            activeShadow: '#892ad6',
+                                            activeBorderColor: '#892ad6',
+                                            hoverBorderColor: '#892ad6',
+                                            hoverBg: '#21152b',
+                                            paddingBlock: 6
+                                        }
+                                    }
+                                }}
+                            >
+                                <Input {...field} placeholder='Example' />
+                            </ConfigProvider>
+                        )}
+                    />
+                </Flex>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: '#00b39b',
+                            fontSize: 16
+                        }
+                    }}
+                >
+                    <Text className='error-text'>{errors.password?.message}</Text>
+                </ConfigProvider>
+                <Flex justify='space-between' align='center'>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorText: 'white',
+                                fontSize: 22,
+                            }
+                        }}
+                    >
+                        <Text className='label-reg'>gender</Text>
+                    </ConfigProvider>
+                    <Controller
+                        name='gender'
+                        control={control}
+                        rules={{
+                            required: 'Поле обязательно для заполнения'
+                        }}
+                        render={({ field }) => (
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        borderRadius: 0,
+                                        lineWidth: 2,
+                                        colorBorder: '#892ad6',
+                                        colorBgContainer: '#892ad6',
+                                        colorText: 'white',
+                                        controlHeight: 30,
+                                        colorBgContainerDisabled: '#892ad6',
+                                        colorPrimary: 'white',
+                                        fontSize: 20
+                                    },
+                                    components: {
+                                        Button: {
+                                            colorTextDisabled: '#aaaaaa',
+                                        }
+                                    }
+                                }}
+                            >
+                                <Group {...field}>
+                                    <Button value='male'>Male</Button>
+                                    <Button value='female'>Female</Button>
+                                </Group>
+                            </ConfigProvider>
+                        )}
+                    />
+                </Flex>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: '#00b39b',
+                            fontSize: 16
+                        }
+                    }}
+                >
+                    <Text className='error-text'>{errors.gender?.message}</Text>
+                </ConfigProvider>
+                <Flex justify='space-between' align='center'>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorText: 'white',
+                                fontSize: 22,
+                            }
+                        }}
+                    >
+                        <Text className='label-reg'>age</Text>
+                    </ConfigProvider>
+                    <Controller
+                        name='age'
+                        control={control}
+                        rules={{
+                            required: 'Поле обязательно для заполнения'
+                        }}
+                        render={({ field }) => (
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        borderRadius: 0,
+                                        lineWidth: 2,
+                                        colorPrimary: '#892ad6',
+                                        colorBorder: '#892ad6',
+                                        colorBgContainer: '#21152b',
+                                        colorText: 'white',
+                                        colorTextPlaceholder: '#5c5c5c',
+                                        controlHeightLG: 60,
+                                        fontSize: 22,
+                                    },
+                                    components: {
+                                        Input: {
+                                            activeShadow: '#892ad6',
+                                            activeBorderColor: '#892ad6',
+                                            hoverBorderColor: '#892ad6',
+                                            hoverBg: '#21152b',
+                                            paddingBlock: 6
+                                        }
+                                    }
+                                }}>
+                                <Input {...field} placeholder='28' />
+                            </ConfigProvider>
+                        )}
+                    />
+                </Flex>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: '#00b39b',
+                            fontSize: 16
+                        }
+                    }}
+                >
+                    <Text className='error-text'>{errors.age?.message}</Text>
+                </ConfigProvider>
+                <Flex justify='center' align='center'>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                borderRadius: 0,
+                                lineWidth: 2,
+                                colorBorder: '#892ad6',
+                                colorBgContainer: '#892ad6',
+                                colorText: 'white',
+                                controlHeight: 45,
+                                colorBgContainerDisabled: '#892ad6',
+                                colorPrimary: 'white',
+                                fontSize: 22
+                            },
+                            components: {
+                                Button: {
+                                    colorTextDisabled: '#aaaaaa',
+                                }
+                            }
+                        }}
+                    >
+                        <Button type='submit' onClick={handleSubmit(onSubmit)}>Sign Up</Button>
+                    </ConfigProvider>
+                </Flex>
+            </form>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorText: 'white',
+                        fontSize: 22,
+                        colorLink: 'white',
+                        colorPrimary: 'white',
+                        lineWidth: 0,
+                        colorBorder: '#892ad6',
+                        colorBgContainer: '#892ad6',
+                    }
+                }}
+            >
+                <Text>Already have an account?
+                    <Link to='/login'><Text underline>Log In</Text></Link>
+                </Text>
+            </ConfigProvider>
+        </div>
+    )
+}
+
+export default RegForm

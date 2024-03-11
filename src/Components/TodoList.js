@@ -2,12 +2,42 @@ import { Input, Button, Typography, Checkbox, List, ConfigProvider, Flex } from 
 import { useState } from 'react';
 import { DeleteFilled, EditFilled, SaveFilled } from '@ant-design/icons'
 import withLogger from './HOC/withLogger'
+import axios from 'axios';
 
-const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, activateMessage, editingMessage, messages, clearStorage }) => {
+const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeMessage, activateMessage, editingMessage, messages, clearStorage }) => {
     const [edit, setEdit] = useState(null)
     const [editText, setEditText] = useState('')
     const { Item } = List;
     const { Text } = Typography;
+
+    const fetchRemove = async (taskId) => {
+        try {
+            const response = await axios.delete(`https://todo-redev.herokuapp.com/api/todos/${taskId}`)
+            console.log('Данные удалены: ', response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchToggle = async (taskId, newTask) => {
+        try {
+            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}/isCompleted`, newTask)
+            console.log('Данные обновлены: ', response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchSave = async (taskId, newTask) => {
+        try {
+            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}`, newTask)
+            console.log('Данные сохранены: ', response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 
     const disabledSaveButton = () => {
         if (editText.length === 0 || editText.trim().length !== editText.length) {
@@ -17,9 +47,11 @@ const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, 
 
     const removeTodo = (id) => {
         setTodos(todos.filter(todo => todo.id !== id))
+        fetchRemove(id)
     }
     const toggleTodo = (id) => {
-        setTodos(todos.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo))
+        setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo))
+        fetchToggle(id, todos)
     }
 
     const editTodo = (id, title) => {
@@ -28,8 +60,9 @@ const TodoList = ({ todos, setTodos, toggleMessage, editMessage, removeMessage, 
     }
 
     const saveTodo = (id) => {
-        setTodos(todos.map(todo => todo.id === id ? {...todo, title: editText} : todo))
+        setTodos(todos.map(todo => todo.id === id ? { ...todo, title: editText } : todo))
         setEdit(null)
+        fetchSave(id, todos)
     }
 
     const consoleMessages = () => {
