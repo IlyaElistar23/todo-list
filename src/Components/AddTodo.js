@@ -1,28 +1,28 @@
 import { Input, Button, ConfigProvider } from 'antd'
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 import withLogger from './HOC/withLogger';
 import axios from 'axios';
 
 const AddTodo = ({ todos, setTodos, config, addMessage }) => {
     const [todoTitle, setTodoTitle] = useState('')
-    console.log(config);
-    const fetchAdd = async (todos, headers) => {
+    const fetchAdd = async (todo, headers) => {
         try {
-            const response = await axios.post('https://todo-redev.herokuapp.com/api/todos', todos, headers)
+            const response = await axios.post('https://todo-redev.herokuapp.com/api/todos', todo, headers)
             console.log('Таска создана: ', response.data);
         } catch (error) {
-            console.log(error);
+            console.log('Ошибка!', error.response.data.message);
         }
     }
 
     const addTodo = () => {
-        setTodos([...todos, {
-            id: uuidv4(),
+        const todo = {
             title: todoTitle,
-            completed: false,
-        }])
-        fetchAdd(todos, config)
+        }
+        setTodos([...todos, todo])
+        fetchAdd({
+            title: todo.title
+        }, config)
         setTodoTitle('')
         addMessage(todoTitle)
     }

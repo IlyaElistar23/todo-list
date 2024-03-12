@@ -5,11 +5,9 @@ import { Button, ConfigProvider, Typography } from 'antd'
 import checkAuth from './HOC/checkAuth';
 import axios from 'axios';
 
-const Todo = ({token}) => {
+const Todo = ({ token }) => {
 
     const [todos, setTodos] = useState([])
-
-    const { Title } = Typography
 
     const headers = {
         'Content-Type': 'application/json',
@@ -22,14 +20,21 @@ const Todo = ({token}) => {
         try {
             const response = await axios.get('https://todo-redev.herokuapp.com/api/todos', config)
             console.log('Данные получены: ', response.data);
+            return response.data
         } catch (error) {
             console.log(error);
         }
     }
+    const getTasks = async () => {
+        const tasks = await fetchData()
+        setTodos(tasks)
+    }
 
     useEffect(() => {
-        fetchData()
-    }, [todos])
+        getTasks()
+    }, [])
+
+    const { Title } = Typography
 
     return (
         <div className='todo'>
@@ -45,8 +50,8 @@ const Todo = ({token}) => {
                     <Title>Todo list</Title>
                 </ConfigProvider>
                 <div className='todo-list'>
-                    <AddTodo todos={todos} setTodos={setTodos} config={config}/>
-                    <TodoList todos={todos} setTodos={setTodos} config={config}/>
+                    <AddTodo todos={todos} setTodos={setTodos} config={config} />
+                    <TodoList todos={todos} setTodos={setTodos} config={config} />
                 </div>
             </div>
             <ConfigProvider

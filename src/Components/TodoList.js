@@ -12,28 +12,28 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
 
     const fetchRemove = async (taskId) => {
         try {
-            const response = await axios.delete(`https://todo-redev.herokuapp.com/api/todos/${taskId}`)
+            const response = await axios.delete(`https://todo-redev.herokuapp.com/api/todos/${taskId}`, config)
             console.log('Данные удалены: ', response.data);
         } catch (error) {
-            console.log(error);
+            console.log('Ошибка!', error.response.data.message);
         }
     }
 
-    const fetchToggle = async (taskId, newTask) => {
+    const fetchToggle = async (taskId) => {
         try {
-            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}/isCompleted`, newTask)
+            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}/isCompleted`, config)
             console.log('Данные обновлены: ', response.data);
         } catch (error) {
-            console.log(error);
+            console.log('Ошибка!', error.response.data.message);
         }
     }
 
     const fetchSave = async (taskId, newTask) => {
         try {
-            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}`, newTask)
+            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}`, newTask, config)
             console.log('Данные сохранены: ', response.data);
         } catch (error) {
-            console.log(error);
+            console.log('Ошибка!', error.response.data.message);
         }
     }
 
@@ -51,7 +51,7 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
     }
     const toggleTodo = (id) => {
         setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo))
-        fetchToggle(id, todos)
+        fetchToggle(id)
     }
 
     const editTodo = (id, title) => {
@@ -62,7 +62,9 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
     const saveTodo = (id) => {
         setTodos(todos.map(todo => todo.id === id ? { ...todo, title: editText } : todo))
         setEdit(null)
-        fetchSave(id, todos)
+        fetchSave(id, {
+            title: editText
+        })
     }
 
     const consoleMessages = () => {

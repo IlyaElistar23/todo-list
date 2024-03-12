@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const withLogger = (Component) => {
-    return ({ todos, setTodos }) => {
+    return ({ todos, setTodos, config }) => {
         const correctDate = (date) => {
             const hours = date.getHours() < 10 ? `0${date.getHours()}` : `${date.getHours()}`
             const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
@@ -61,6 +61,7 @@ const withLogger = (Component) => {
             setMessages([])
         }
         return <Component
+            config={config}
             todos={todos}
             setTodos={setTodos}
             addMessage={addMessage}
