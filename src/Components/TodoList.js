@@ -15,7 +15,7 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
             const response = await axios.delete(`https://todo-redev.herokuapp.com/api/todos/${taskId}`, config)
             console.log('Данные удалены: ', response.data);
         } catch (error) {
-            console.log('Ошибка!', error.response.data.message);
+            console.log('Ошибка!', error);
         }
     }
 

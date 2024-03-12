@@ -1,6 +1,6 @@
 import { Input, Button, ConfigProvider } from 'antd'
 import { useState } from 'react';
-// import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import withLogger from './HOC/withLogger';
 import axios from 'axios';
 
@@ -18,6 +18,7 @@ const AddTodo = ({ todos, setTodos, config, addMessage }) => {
     const addTodo = () => {
         const todo = {
             title: todoTitle,
+            id: uuidv4()
         }
         setTodos([...todos, todo])
         fetchAdd({
