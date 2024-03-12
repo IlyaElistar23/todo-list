@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import AddTodo from './AddTodo'
 import TodoList from './TodoList';
-import { Button, ConfigProvider, Typography } from 'antd'
+import { Button, ConfigProvider, Typography, Alert } from 'antd'
 import checkAuth from './HOC/checkAuth';
 import axios from 'axios';
 
-const Todo = ({ token }) => {
+const Todo = ({ token, alertWindow, showAlert, alertProps, setAlertProps }) => {
 
     const [todos, setTodos] = useState([])
 
@@ -15,6 +15,8 @@ const Todo = ({ token }) => {
     }
 
     const config = { headers }
+
+
 
     const fetchData = async () => {
         try {
@@ -38,6 +40,24 @@ const Todo = ({ token }) => {
 
     return (
         <div className='todo'>
+            {showAlert &&
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorSuccessBg: '#21152b',
+                            colorSuccessBorder: '#21152b',
+                            colorText: 'white'
+                        }
+                    }}
+                >
+                    <Alert
+                        message='Выполнено!'
+                        type='success'
+                        description='Действие выполнено успешно.'
+                        showIcon
+                    />
+                </ConfigProvider>
+            }
             <div className='todo-background'>
                 <ConfigProvider
                     theme={{
@@ -50,8 +70,18 @@ const Todo = ({ token }) => {
                     <Title>Todo list</Title>
                 </ConfigProvider>
                 <div className='todo-list'>
-                    <AddTodo todos={todos} setTodos={setTodos} config={config} />
-                    <TodoList todos={todos} setTodos={setTodos} config={config} />
+                    <AddTodo
+                        todos={todos}
+                        setTodos={setTodos}
+                        config={config}
+                        alertWindow={alertWindow}
+                    />
+                    <TodoList
+                        todos={todos}
+                        setTodos={setTodos}
+                        config={config}
+                        alertWindow={alertWindow}
+                    />
                 </div>
             </div>
             <ConfigProvider

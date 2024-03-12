@@ -1,9 +1,10 @@
 import { useForm, Controller } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { Input, Typography, ConfigProvider, Radio, Flex } from 'antd'
+import { Input, Typography, ConfigProvider, Radio, Flex, Alert } from 'antd'
 import axios from 'axios'
 
-const RegForm = () => {
+const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
+
     const {
         handleSubmit,
         control,
@@ -20,9 +21,22 @@ const RegForm = () => {
     const fetchReg = async (data) => {
         try {
             const response = await axios.post('https://todo-redev.herokuapp.com/api/users/register', data)
+            navigate('/login')
+            alertWindow()
+            setAlertProps({
+                type: 'success',
+                message: 'Готово!',
+                description: 'Регистрация прошла успешно.'
+            })
             console.log(response.data);
         } catch (error) {
             console.log(error);
+            alertWindow()
+            setAlertProps({
+                type: 'error',
+                message: 'Ошибка!',
+                description: `${error.response.data.message}.`
+            })
         }
     }
 
@@ -34,7 +48,6 @@ const RegForm = () => {
             console.log(data);
             fetchReg(data)
             reset()
-            navigate('/login')
         } catch (error) {
             console.log('Ошибка: ', error);
         }
@@ -42,6 +55,24 @@ const RegForm = () => {
 
     return (
         <div className='todo'>
+            {showAlert &&
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorSuccessBg: '#21152b',
+                            colorErrorBg: '#21152b',
+                            colorSuccessBorder: '#21152b',
+                            colorErrorBorder: '#21152b',
+                            colorText: 'white'
+                        }
+                    }}>
+                    <Alert
+                        type={alertProps.type}
+                        message={alertProps.message}
+                        description={alertProps.description}
+                        showIcon />
+                </ConfigProvider>
+            }
             <form>
                 <Flex justify='space-between' align='center'>
                     <ConfigProvider

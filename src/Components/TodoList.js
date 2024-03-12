@@ -4,7 +4,19 @@ import { DeleteFilled, EditFilled, SaveFilled } from '@ant-design/icons'
 import withLogger from './HOC/withLogger'
 import axios from 'axios';
 
-const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeMessage, activateMessage, editingMessage, messages, clearStorage }) => {
+const TodoList = ({
+    todos,
+    setTodos,
+    config,
+    toggleMessage,
+    editMessage,
+    removeMessage,
+    activateMessage,
+    editingMessage,
+    messages,
+    clearStorage,
+    alertWindow
+}) => {
     const [edit, setEdit] = useState(null)
     const [editText, setEditText] = useState('')
     const { Item } = List;
@@ -111,6 +123,7 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
                                                     onPressEnter={() => {
                                                         saveTodo(todo.id)
                                                         editMessage(todo.title)
+                                                        alertWindow()
                                                     }}
                                                 />
                                             </ConfigProvider>
@@ -141,6 +154,7 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
                                                     onClick={() => {
                                                         saveTodo(todo.id)
                                                         editMessage(todo.title)
+                                                        alertWindow()
                                                     }}
                                                     disabled={disabledSaveButton()}
                                                     size='large'
@@ -167,6 +181,7 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
                                                     type='text'
                                                     onClick={() => {
                                                         toggleTodo(todo.id)
+                                                        alertWindow()
                                                         if (todo.completed) {
                                                             toggleMessage(todo.title)
                                                         } else {
@@ -209,6 +224,7 @@ const TodoList = ({ todos, setTodos, config, toggleMessage, editMessage, removeM
                                                         onClick={() => {
                                                             removeTodo(todo.id)
                                                             removeMessage(todo.title)
+                                                            alertWindow()
                                                         }}
                                                         icon={<DeleteFilled />}
                                                     >

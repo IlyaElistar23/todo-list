@@ -4,7 +4,13 @@ import { v4 as uuidv4 } from 'uuid'
 import withLogger from './HOC/withLogger';
 import axios from 'axios';
 
-const AddTodo = ({ todos, setTodos, config, addMessage }) => {
+const AddTodo = ({
+    todos,
+    setTodos,
+    config,
+    addMessage,
+    alertWindow
+}) => {
     const [todoTitle, setTodoTitle] = useState('')
     const fetchAdd = async (todo, headers) => {
         try {
@@ -18,7 +24,6 @@ const AddTodo = ({ todos, setTodos, config, addMessage }) => {
     const addTodo = () => {
         const todo = {
             title: todoTitle,
-            id: uuidv4()
         }
         setTodos([...todos, todo])
         fetchAdd({
@@ -93,7 +98,10 @@ const AddTodo = ({ todos, setTodos, config, addMessage }) => {
                 }}
             >
                 <Button
-                    onClick={() => addTodo()}
+                    onClick={() => {
+                        addTodo()
+                        alertWindow()
+                    }}
                     size='large'
                     disabled={disabledButton()}
                 >Add task</Button>

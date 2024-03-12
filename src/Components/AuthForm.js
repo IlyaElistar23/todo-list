@@ -1,9 +1,9 @@
 import { useForm, Controller } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { Input, Button, Typography, Flex, ConfigProvider } from 'antd'
+import { Input, Button, Typography, Flex, ConfigProvider, Alert } from 'antd'
 import axios from 'axios'
 
-const AuthForm = () => {
+const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
     const {
         handleSubmit,
         control,
@@ -21,22 +21,56 @@ const AuthForm = () => {
 
     const fetchAuth = async (data) => {
         try {
-            const response = axios.post('https://todo-redev.herokuapp.com/api/auth/login', data)
-            .then(response => localStorage.setItem('token', response.data.token))
+            const response = await axios.post('https://todo-redev.herokuapp.com/api/auth/login', data)
+                .then(response => localStorage.setItem('token', response.data.token))
+            alertWindow()
+            setAlertProps({
+                type: 'success',
+                message: 'Готово!',
+                description: 'Вход выполнен успешно.'
+            })
+            navigate('/todo-list')
+        } catch (error) {
+            console.log(error);
+            alertWindow()
+            setAlertProps({
+                type: 'error',
+                message: 'Ошибка!',
+                description: `${error.response.data.message}.`
+            })
+        }
+    }
+
+    const onSubmit = (data) => {
+        try {
+            console.log(data);
+            fetchAuth(data)
+            reset()
         } catch (error) {
             console.log(error);
         }
     }
 
-    const onSubmit = (data) => {
-        console.log(data);
-        fetchAuth(data)
-        reset()
-        navigate('/todo-list')
-    }
-
     return (
         <div className='todo'>
+            {showAlert &&
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorSuccessBg: '#21152b',
+                            colorErrorBg: '#21152b',
+                            colorSuccessBorder: '#21152b',
+                            colorErrorBorder: '#21152b',
+                            colorText: 'white'
+                        }
+                    }}>
+                    <Alert
+                        showIcon
+                        type={alertProps.type}
+                        message={alertProps.message}
+                        description={alertProps.description} />
+                </ConfigProvider>
+            }
             <form>
                 <Flex vertical justify='center' align='center'>
                     <ConfigProvider
