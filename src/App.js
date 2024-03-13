@@ -17,29 +17,31 @@ function App() {
     }, 0)
     setTimeout(() => {
       setShowAlert(false)
-    }, 2000)
+    }, 4000)
   }
   return (
     <Routes>
       <Route path="/home" element={<HomePage />} />
-      <Route path="/login" element={<AuthForm
-        alertWindow={alertWindow}
-        showAlert={showAlert}
-        alertProps={alertProps}
-        setAlertProps={setAlertProps} 
+      <Route path="/login" element={
+        <AuthForm
+          alertWindow={alertWindow}
+          showAlert={showAlert}
+          alertProps={alertProps}
+          setAlertProps={setAlertProps}
         />} />
-      <Route path="/register" element={<RegForm
-        alertWindow={alertWindow}
-        showAlert={showAlert}
-        alertProps={alertProps}
-        setAlertProps={setAlertProps} 
+      <Route path="/register" element={
+        <RegForm
+          alertWindow={alertWindow}
+          showAlert={showAlert}
+          alertProps={alertProps}
+          setAlertProps={setAlertProps}
         />} />
-      <Route path="/todo-list" element={<Todo
-        alertWindow={alertWindow}
-        showAlert={showAlert} />} 
-        alertProps={alertProps}
-        setAlertProps={setAlertProps} 
-        />
+      <Route path="/todo-list" element={
+        <Todo
+          alertWindow={alertWindow}
+          showAlert={showAlert}
+        />}
+      />
     </Routes>
   )
 }

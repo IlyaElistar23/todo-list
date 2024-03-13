@@ -1,4 +1,3 @@
-
 const checkAuth = (Todo) => {
     return (props) => {
         const token = localStorage.getItem('token')

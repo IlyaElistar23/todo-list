@@ -53,7 +53,7 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
 
     return (
         <div className='todo'>
-            {showAlert &&
+            {showAlert ?
                 <ConfigProvider
                     theme={{
                         token: {
@@ -69,15 +69,42 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                         type={alertProps.type}
                         message={alertProps.message}
                         description={alertProps.description} />
+                </ConfigProvider> :
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorSuccessBg: '#892ad6',
+                            colorSuccessBorder: '#892ad6',
+                            colorText: '#892ad6',
+                            colorSuccess: '#892ad6'
+                        }
+                    }}
+                >
+                    <Alert
+                        message='Выполнено!'
+                        type='success'
+                        description='Действие выполнено успешно.'
+                        showIcon
+                    />
                 </ConfigProvider>
             }
             <form>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: 'white',
+                            fontSize: 36,
+                        }
+                    }}
+                >
+                    <Text className='title'>Войти</Text>
+                </ConfigProvider>
                 <Flex vertical justify='center' align='center'>
                     <ConfigProvider
                         theme={{
                             token: {
                                 colorText: 'white',
-                                fontSize: 22,
+                                fontSize: 20,
                             }
                         }}
                     >
@@ -93,15 +120,15 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             <ConfigProvider
                                 theme={{
                                     token: {
-                                        borderRadius: 0,
-                                        lineWidth: 2,
+                                        borderRadius: 10,
+                                        lineWidth: 1,
                                         colorPrimary: '#892ad6',
                                         colorBorder: '#892ad6',
                                         colorBgContainer: '#21152b',
                                         colorText: 'white',
                                         colorTextPlaceholder: '#5c5c5c',
-                                        controlHeightLG: 60,
-                                        fontSize: 22,
+                                        controlHeightLG: 40,
+                                        fontSize: 20,
                                     },
                                     components: {
                                         Input: {
@@ -132,7 +159,7 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                         theme={{
                             token: {
                                 colorText: 'white',
-                                fontSize: 22,
+                                fontSize: 20,
                             }
                         }}
                     >
@@ -148,15 +175,15 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             <ConfigProvider
                                 theme={{
                                     token: {
-                                        borderRadius: 0,
-                                        lineWidth: 2,
+                                        borderRadius: 10,
+                                        lineWidth: 1,
                                         colorPrimary: '#892ad6',
                                         colorBorder: '#892ad6',
                                         colorBgContainer: '#21152b',
                                         colorText: 'white',
                                         colorTextPlaceholder: '#5c5c5c',
-                                        controlHeightLG: 60,
-                                        fontSize: 22,
+                                        controlHeightLG: 40,
+                                        fontSize: 20,
                                     },
                                     components: {
                                         Input: {
@@ -186,26 +213,32 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                     <ConfigProvider
                         theme={{
                             token: {
-                                borderRadius: 0,
-                                lineWidth: 2,
+                                borderRadius: 10,
+                                lineWidth: 1,
                                 colorBorder: '#892ad6',
                                 colorBgContainer: '#892ad6',
                                 colorText: 'white',
                                 controlHeight: 45,
                                 colorBgContainerDisabled: '#892ad6',
                                 fontSize: 22,
-                                colorPrimary: 'white'
                             },
                             components: {
                                 Button: {
                                     colorTextDisabled: '#aaaaaa',
-                                    defaultHoverBorderColor: 'white',
+                                    defaultHoverBorderColor: '#21152b',
                                     defaultHoverColor: 'white'
                                 }
                             }
                         }}
                     >
-                        <Button className='login' htmlType='submit' onClick={handleSubmit(onSubmit)}>Log In</Button>
+                        <Button 
+                        className='login' 
+                        htmlType='submit' 
+                        onClick={handleSubmit(onSubmit)}
+                        style={{
+                            marginTop: '50px'
+                        }}
+                        >Log In</Button>
                     </ConfigProvider>
                 </Flex>
             </form>
@@ -213,17 +246,18 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                 theme={{
                     token: {
                         colorText: 'white',
-                        fontSize: 22,
+                        fontSize: 18,
                         colorLink: 'white'
                     }
                 }}
             >
-                <Text>
+                <Text style={{
+                    marginTop: '140px'
+                }}>
                     Don't have an account?
                     <Link to='/register'> <Text underline>Sign Up</Text></Link>
                 </Text>
             </ConfigProvider>
-
         </div>
     )
 }

@@ -1,6 +1,5 @@
 import { Input, Button, ConfigProvider } from 'antd'
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'
 import withLogger from './HOC/withLogger';
 import axios from 'axios';
 
@@ -16,19 +15,17 @@ const AddTodo = ({
         try {
             const response = await axios.post('https://todo-redev.herokuapp.com/api/todos', todo, headers)
             console.log('Таска создана: ', response.data);
+            return response.data
         } catch (error) {
-            console.log('Ошибка!', error.response.data.message);
+            console.log('Ошибка!', error);
         }
     }
 
-    const addTodo = () => {
-        const todo = {
+    const addTodo = async () => {
+        const todo = await fetchAdd({
             title: todoTitle,
-        }
-        setTodos([...todos, todo])
-        fetchAdd({
-            title: todo.title
         }, config)
+        setTodos([...todos, todo])
         setTodoTitle('')
         addMessage(todoTitle)
     }
@@ -44,14 +41,14 @@ const AddTodo = ({
             <ConfigProvider
                 theme={{
                     token: {
-                        borderRadius: 0,
-                        lineWidth: 2,
+                        borderRadius: 10,
+                        lineWidth: 1,
                         colorBorder: '#892ad6',
                         colorBgContainer: '#21152b',
                         colorText: 'white',
                         colorTextPlaceholder: '#aaaaaa',
-                        controlHeightLG: 60,
-                        fontSize: 22,
+                        controlHeightLG: 40,
+                        fontSize: 18,
                     },
                     components: {
                         Input: {
@@ -67,6 +64,7 @@ const AddTodo = ({
                     size='large'
                     style={{
                         width: 500,
+                        margin: '0 5px'
                     }}
                     placeholder='Enter your task'
                     value={todoTitle}
@@ -79,12 +77,12 @@ const AddTodo = ({
             <ConfigProvider
                 theme={{
                     token: {
-                        borderRadius: 0,
-                        lineWidth: 2,
+                        borderRadius: 10,
+                        lineWidth: 1,
                         colorBorder: '#892ad6',
                         colorBgContainer: '#892ad6',
                         colorText: 'white',
-                        controlHeightLG: 60,
+                        controlHeightLG: 40,
                         colorBgContainerDisabled: '#892ad6'
                     },
                     components: {
@@ -101,6 +99,9 @@ const AddTodo = ({
                     onClick={() => {
                         addTodo()
                         alertWindow()
+                    }}
+                    style={{
+                        margin: '0 5px'
                     }}
                     size='large'
                     disabled={disabledButton()}

@@ -1,3 +1,9 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .todo {
   background-color: #892ad6;
   display: flex;
@@ -5,8 +11,13 @@
   justify-content: center;
   align-items: center;
   padding: 30px;
-  height: 100%;
+  min-height: 804px;
 }
+
+.title {
+  margin-bottom: 30px;
+}
+
 .home {
   background-color: #892ad6;
   display: flex;
@@ -21,20 +32,25 @@ form {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  padding: 45px;
-  margin: 200px;
+  padding: 40px;
+  margin: 75px 200px;
   text-align: center;
   background-color: #21152b;
   height: 50%;
   width: 30%;
+  opacity: 95%;
 }
 
 .todo-background {
   border-radius: 10px;
-  padding: 40px;
-  margin: 200px;
+  padding: 40px 40px 50px 40px;
+  margin: 100px 200px 200px;
   text-align: center;
   background-color: #21152b;
+}
+
+.label-auth {
+  margin-bottom: 20px;
 }
 
 .add-todo {
@@ -47,8 +63,8 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  width: 595px;
+  padding: 5px 20px;
+  width: 635px;
   background-color: #892ad6;
   border-radius: 8px;
 }
@@ -61,15 +77,7 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 620px;
-}
-
-.logout {
-  margin: 30px;
-}
-
-.login {
-  margin-top: 40px;
+  width: 635px;
 }
 
 .console {
@@ -83,8 +91,4 @@ form {
 
 .error-text {
   margin: 20px;
-}
-
-.label-auth {
-  margin-bottom: 40px;
 }

@@ -16,6 +16,9 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
         mode: 'onBlur'
     })
 
+    const { Text } = Typography
+    const { Group, Button } = Radio
+
     const navigate = useNavigate()
 
     const fetchReg = async (data) => {
@@ -40,9 +43,6 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
         }
     }
 
-    const { Text } = Typography
-    const { Group, Button } = Radio
-
     const onSubmit = (data) => {
         try {
             console.log(data);
@@ -55,7 +55,7 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
 
     return (
         <div className='todo'>
-            {showAlert &&
+            {showAlert ?
                 <ConfigProvider
                     theme={{
                         token: {
@@ -71,15 +71,42 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                         message={alertProps.message}
                         description={alertProps.description}
                         showIcon />
+                </ConfigProvider> :
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorSuccessBg: '#892ad6',
+                            colorSuccessBorder: '#892ad6',
+                            colorText: '#892ad6',
+                            colorSuccess: '#892ad6'
+                        }
+                    }}
+                >
+                    <Alert
+                        message='Выполнено!'
+                        type='success'
+                        description='Действие выполнено успешно.'
+                        showIcon
+                    />
                 </ConfigProvider>
             }
             <form>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: 'white',
+                            fontSize: 36,
+                        }
+                    }}
+                >
+                    <Text className='title'>Зарегистрироваться</Text>
+                </ConfigProvider>
                 <Flex justify='space-between' align='center'>
                     <ConfigProvider
                         theme={{
                             token: {
                                 colorText: 'white',
-                                fontSize: 22,
+                                fontSize: 20,
                             }
                         }}
                     >
@@ -95,15 +122,15 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             <ConfigProvider
                                 theme={{
                                     token: {
-                                        borderRadius: 0,
-                                        lineWidth: 2,
+                                        borderRadius: 10,
+                                        lineWidth: 1,
                                         colorPrimary: '#892ad6',
                                         colorBorder: '#892ad6',
                                         colorBgContainer: '#21152b',
                                         colorText: 'white',
                                         colorTextPlaceholder: '#5c5c5c',
-                                        controlHeightLG: 60,
-                                        fontSize: 22,
+                                        controlHeightLG: 40,
+                                        fontSize: 20,
                                     },
                                     components: {
                                         Input: {
@@ -136,7 +163,7 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                         theme={{
                             token: {
                                 colorText: 'white',
-                                fontSize: 22,
+                                fontSize: 20,
                             }
                         }}
                     >
@@ -156,15 +183,15 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             <ConfigProvider
                                 theme={{
                                     token: {
-                                        borderRadius: 0,
-                                        lineWidth: 2,
+                                        borderRadius: 10,
+                                        lineWidth: 1,
                                         colorPrimary: '#892ad6',
                                         colorBorder: '#892ad6',
                                         colorBgContainer: '#21152b',
                                         colorText: 'white',
                                         colorTextPlaceholder: '#5c5c5c',
-                                        controlHeightLG: 60,
-                                        fontSize: 22,
+                                        controlHeightLG: 40,
+                                        fontSize: 20,
                                         colorWarningBg: 'rgb(33, 21, 43, 0.04)'
                                     },
                                     components: {
@@ -198,7 +225,7 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                         theme={{
                             token: {
                                 colorText: 'white',
-                                fontSize: 22,
+                                fontSize: 20,
                             }
                         }}>
                         <Text className='label-reg'>password</Text>
@@ -214,15 +241,15 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             <ConfigProvider
                                 theme={{
                                     token: {
-                                        borderRadius: 0,
-                                        lineWidth: 2,
+                                        borderRadius: 10,
+                                        lineWidth: 1,
                                         colorPrimary: '#892ad6',
                                         colorBorder: '#892ad6',
                                         colorBgContainer: '#21152b',
                                         colorText: 'white',
                                         colorTextPlaceholder: '#5c5c5c',
-                                        controlHeightLG: 60,
-                                        fontSize: 22,
+                                        controlHeightLG: 40,
+                                        fontSize: 20,
                                     },
                                     components: {
                                         Input: {
@@ -255,7 +282,7 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                         theme={{
                             token: {
                                 colorText: 'white',
-                                fontSize: 22,
+                                fontSize: 20,
                             }
                         }}
                     >
@@ -271,12 +298,12 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             <ConfigProvider
                                 theme={{
                                     token: {
-                                        borderRadius: 0,
-                                        lineWidth: 2,
+                                        borderRadius: 10,
+                                        lineWidth: 1,
                                         colorBorder: '#892ad6',
                                         colorBgContainer: '#892ad6',
                                         colorText: 'white',
-                                        controlHeight: 30,
+                                        controlHeight: 40,
                                         colorBgContainerDisabled: '#892ad6',
                                         colorPrimary: 'white',
                                         fontSize: 20
@@ -289,8 +316,12 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                                 }}
                             >
                                 <Group {...field}>
-                                    <Button value='male'>Male</Button>
-                                    <Button value='female'>Female</Button>
+                                    <Button style={{
+                                        margin: '0 2px'
+                                    }} value='male'>Male</Button>
+                                    <Button style={{
+                                        margin: '0 2px'
+                                    }} value='female'>Female</Button>
                                 </Group>
                             </ConfigProvider>
                         )}
@@ -311,7 +342,7 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                         theme={{
                             token: {
                                 colorText: 'white',
-                                fontSize: 22,
+                                fontSize: 20,
                             }
                         }}
                     >
@@ -327,15 +358,15 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             <ConfigProvider
                                 theme={{
                                     token: {
-                                        borderRadius: 0,
-                                        lineWidth: 2,
+                                        borderRadius: 10,
+                                        lineWidth: 1,
                                         colorPrimary: '#892ad6',
                                         colorBorder: '#892ad6',
                                         colorBgContainer: '#21152b',
                                         colorText: 'white',
                                         colorTextPlaceholder: '#5c5c5c',
-                                        controlHeightLG: 60,
-                                        fontSize: 22,
+                                        controlHeightLG: 40,
+                                        fontSize: 20,
                                     },
                                     components: {
                                         Input: {
@@ -366,8 +397,8 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                     <ConfigProvider
                         theme={{
                             token: {
-                                borderRadius: 0,
-                                lineWidth: 2,
+                                borderRadius: 10,
+                                lineWidth: 1,
                                 colorBorder: '#892ad6',
                                 colorBgContainer: '#892ad6',
                                 colorText: 'white',
@@ -379,6 +410,8 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             components: {
                                 Button: {
                                     colorTextDisabled: '#aaaaaa',
+                                    defaultHoverBorderColor: '#21152b',
+                                    defaultHoverColor: 'white'
                                 }
                             }
                         }}
@@ -391,12 +424,8 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                 theme={{
                     token: {
                         colorText: 'white',
-                        fontSize: 22,
-                        colorLink: 'white',
-                        colorPrimary: 'white',
-                        lineWidth: 0,
-                        colorBorder: '#892ad6',
-                        colorBgContainer: '#892ad6',
+                        fontSize: 18,
+                        colorLink: 'white'
                     }
                 }}
             >

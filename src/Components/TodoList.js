@@ -31,12 +31,12 @@ const TodoList = ({
         }
     }
 
-    const fetchToggle = async (taskId) => {
+    const fetchToggle = async (taskId, newTask) => {
         try {
-            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}/isCompleted`, config)
+            const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}/isCompleted`, newTask, config)
             console.log('Данные обновлены: ', response.data);
         } catch (error) {
-            console.log('Ошибка!', error.response.data.message);
+            console.log('Ошибка!', error);
         }
     }
 
@@ -45,11 +45,9 @@ const TodoList = ({
             const response = await axios.patch(`https://todo-redev.herokuapp.com/api/todos/${taskId}`, newTask, config)
             console.log('Данные сохранены: ', response.data);
         } catch (error) {
-            console.log('Ошибка!', error.response.data.message);
+            console.log('Ошибка!', error);
         }
     }
-
-
 
     const disabledSaveButton = () => {
         if (editText.length === 0 || editText.trim().length !== editText.length) {
@@ -97,14 +95,14 @@ const TodoList = ({
                                             <ConfigProvider
                                                 theme={{
                                                     token: {
-                                                        borderRadius: 0,
-                                                        lineWidth: 2,
+                                                        borderRadius: 10,
+                                                        lineWidth: 1,
                                                         colorBorder: '#892ad6',
                                                         colorBgContainer: '#21152b',
                                                         colorText: 'white',
                                                         colorTextPlaceholder: '#aaaaaa',
-                                                        controlHeightLG: 60,
-                                                        fontSize: 22,
+                                                        controlHeightLG: 40,
+                                                        fontSize: 18,
                                                     },
                                                     components: {
                                                         Input: {
@@ -130,12 +128,12 @@ const TodoList = ({
                                             <ConfigProvider
                                                 theme={{
                                                     token: {
-                                                        borderRadius: 0,
-                                                        lineWidth: 2,
+                                                        borderRadius: 10,
+                                                        lineWidth: 1,
                                                         colorBorder: '#892ad6',
                                                         colorBgContainer: '#892ad6',
                                                         colorText: 'white',
-                                                        controlHeightLG: 60,
+                                                        controlHeightLG: 40,
                                                     },
                                                     components: {
                                                         Button: {
@@ -145,7 +143,7 @@ const TodoList = ({
                                                             defaultHoverBg: '#892ad6',
                                                             defaultBg: '#892ad6',
                                                             defaultBorderColor: '#892ad6',
-                                                            onlyIconSize: 24
+                                                            onlyIconSize: 20
                                                         }
                                                     }
                                                 }}
@@ -167,7 +165,7 @@ const TodoList = ({
                                                 theme={{
                                                     token: {
                                                         colorText: 'white',
-                                                        fontSize: 24,
+                                                        fontSize: 20,
                                                         colorBgContainer: '#892ad6',
                                                         colorBorder: '#892ad6',
                                                         colorPrimaryHover: '#892ad6',
@@ -206,7 +204,7 @@ const TodoList = ({
                                                             defaultHoverBg: '#892ad6',
                                                             defaultBg: '#892ad6',
                                                             defaultBorderColor: '#892ad6',
-                                                            onlyIconSize: 24
+                                                            onlyIconSize: 20
                                                         }
                                                     }
                                                 }}
@@ -239,18 +237,6 @@ const TodoList = ({
                     }
                 </List>
             </Flex>
-            <ConfigProvider
-                theme={{
-                    token: {
-                        colorLink: 'white',
-                        fontSize: 24,
-                        margin: 40
-                    }
-                }}
-            >
-                <Button className='console' type='link' onClick={() => consoleMessages()}>Console History</Button>
-                <Button className='console' type='link' onClick={() => clearStorage()}>Clear History</Button>
-            </ConfigProvider>
         </>
     )
 }
