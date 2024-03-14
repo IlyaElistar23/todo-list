@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 
 const withLogger = (Component) => {
-    return ({ todos, setTodos, config, alertWindow }) => {
+    return ({ todos, setTodos, config, alertWindow, showAlert, messages, setMessages }) => {
         const correctDate = (date) => {
             const hours = date.getHours() < 10 ? `0${date.getHours()}` : `${date.getHours()}`
             const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
             const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : `${date.getSeconds()}`
             return `${hours}:${minutes}:${seconds}`
         }
-        const [messages, setMessages] = useState([])
 
         const addMessage = (title) => {
 
@@ -60,9 +59,11 @@ const withLogger = (Component) => {
         const clearStorage = () => {
             setMessages([])
         }
+
         return <Component
             alertWindow={alertWindow}
             config={config}
+            showAlert={showAlert}
             todos={todos}
             setTodos={setTodos}
             addMessage={addMessage}

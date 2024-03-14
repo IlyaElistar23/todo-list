@@ -19,6 +19,7 @@ function App() {
       setShowAlert(false)
     }, 4000)
   }
+
   return (
     <Routes>
       <Route path="/home" element={<HomePage />} />

@@ -1,24 +1,27 @@
 import { useState, useEffect } from 'react'
-import { ConfigProvider, Typography, Alert, Layout, Button } from 'antd'
-import { UnorderedListOutlined, LogoutOutlined } from '@ant-design/icons'
+import { ConfigProvider, Typography, Alert, Layout, Button, List, Modal } from 'antd'
+import { UnorderedListOutlined, LogoutOutlined, CloseOutlined, ClearOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import AddTodo from './AddTodo'
 import TodoList from './TodoList';
 import checkAuth from './HOC/checkAuth';
 import axios from 'axios';
+import { v4 as uuid4 } from 'uuid'
 
-const Todo = ({ token, alertWindow, showAlert }) => {
+const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
 
     const [todos, setTodos] = useState([])
+    const [collapsed, setCollapsed] = useState(false)
+
+    const { Header, Content, Footer, Sider } = Layout
+    const { Text } = Typography
+    const { Item } = List
 
     const headers = {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
     }
-
     const config = { headers }
-
-    const { Header, Content, Footer } = Layout
 
     const fetchData = async () => {
         try {
@@ -45,10 +48,11 @@ const Todo = ({ token, alertWindow, showAlert }) => {
         navigate('/login')
     }
 
-    const { Text } = Typography
-
     return (
         <Layout>
+
+            {/* Header block*/}
+
             <ConfigProvider
                 theme={{
                     components: {
@@ -64,75 +68,158 @@ const Todo = ({ token, alertWindow, showAlert }) => {
                 }}
             >
                 <Header className='header'>
-                    <Button type='link' icon={<UnorderedListOutlined />}>History</Button>
+                    <Button type='link' icon={<UnorderedListOutlined />} onClick={() => setCollapsed(!collapsed)}>History</Button>
                     <Button type='link' onClick={logout} icon={<LogoutOutlined />}>Log out</Button>
                 </Header>
             </ConfigProvider>
-            <Content>
-                <div className='todo'>
-                    {showAlert ?
-                        <ConfigProvider
-                            theme={{
-                                token: {
-                                    colorSuccessBg: '#21152b',
-                                    colorSuccessBorder: '#21152b',
-                                    colorText: 'white'
-                                }
-                            }}
-                        >
-                            <Alert
-                                message='Выполнено!'
-                                type='success'
-                                description='Действие выполнено успешно.'
-                                showIcon
-                            />
-                        </ConfigProvider> :
-                        <ConfigProvider
-                            theme={{
-                                token: {
-                                    colorSuccessBg: '#892ad6',
-                                    colorSuccessBorder: '#892ad6',
-                                    colorText: '#892ad6',
-                                    colorSuccess: '#892ad6'
-                                }
-                            }}
-                        >
-                            <Alert
-                                message='Выполнено!'
-                                type='success'
-                                description='Действие выполнено успешно.'
-                                showIcon
-                            />
-                        </ConfigProvider>
-                    }
-                    <div className='todo-background'>
-                        <ConfigProvider
-                            theme={{
-                                token: {
-                                    colorText: 'white',
-                                    fontSize: 36,
-                                }
-                            }}
-                        >
-                            <Text className='title'>Todo list</Text>
-                        </ConfigProvider>
-                        <div className='todo-list'>
-                            <AddTodo
-                                todos={todos}
-                                setTodos={setTodos}
-                                config={config}
-                                alertWindow={alertWindow}
-                            />
-                            <TodoList
-                                todos={todos}
-                                setTodos={setTodos}
-                                config={config}
-                                alertWindow={alertWindow}
-                            />
+
+            {/* Content block */}
+
+            <Layout>
+                <Content>
+                    <div className='todo'>
+
+                        {/* Alert windows */}
+
+                        {showAlert ?
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        colorSuccessBg: '#21152b',
+                                        colorSuccessBorder: '#21152b',
+                                        colorText: 'white'
+                                    }
+                                }}
+                            >
+                                <Alert
+                                    message='Выполнено!'
+                                    type='success'
+                                    description='Действие выполнено успешно.'
+                                    showIcon
+                                />
+                            </ConfigProvider> :
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        colorSuccessBg: '#892ad6',
+                                        colorSuccessBorder: '#892ad6',
+                                        colorText: '#892ad6',
+                                        colorSuccess: '#892ad6'
+                                    }
+                                }}
+                            >
+                                <Alert
+                                    message='Выполнено!'
+                                    type='success'
+                                    description='Действие выполнено успешно.'
+                                    showIcon
+                                />
+                            </ConfigProvider>
+                        }
+
+                        {/* Todo list */}
+
+                        <div className='todo-background'>
+                            <ConfigProvider
+                                theme={{
+                                    token: {
+                                        colorText: 'white',
+                                        fontSize: 36,
+                                    }
+                                }}
+                            >
+                                <Text className='title'>Todo list</Text>
+                            </ConfigProvider>
+                            <div className='todo-list'>
+                                <AddTodo
+                                    todos={todos}
+                                    setTodos={setTodos}
+                                    config={config}
+                                    alertWindow={alertWindow}
+                                    messages={messages}
+                                    setMessages={setMessages}
+                                />
+                                <TodoList
+                                    todos={todos}
+                                    setTodos={setTodos}
+                                    config={config}
+                                    alertWindow={alertWindow}
+                                    messages={messages}
+                                    setMessages={setMessages}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Content>
+                </Content>
+
+                {/* Sider block */}
+
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorText: 'white',
+                            fontSize: 12
+                        },
+                        components: {
+                            Layout: {
+                                headerBg: '#21152b',
+                                siderBg: '#21152b',
+                                footerBg: '#21152b'
+                            }
+                        }
+                    }}>
+                    <Sider width={300} collapsed={collapsed} collapsedWidth={0} style={{
+                        backgroundColor: '#21152b'
+                    }}>
+                        <Layout>
+
+                            {/* Sider header */}
+
+                            <Header style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-evenly'
+                            }}>
+                                <ConfigProvider
+                                    theme={{
+                                        components: {
+                                            Button: {
+                                                defaultBg: '#21152b',
+                                                defaultBorderColor: '#21152b',
+                                                defaultHoverBg: '#21152b',
+                                                defaultHoverBorderColor: '#21152b',
+                                                defaultHoverColor: '#892ad6',
+                                                onlyIconSize: 18
+                                            }
+                                        }
+                                    }}
+                                >
+                                    <Button icon={<CloseOutlined />} onClick={() => setCollapsed(!collapsed)}></Button>
+                                    <Button icon={<ClearOutlined />} onClick={() => {
+                                        setMessages([])
+                                        localStorage.removeItem('messages')
+                                    }}></Button>
+                                </ConfigProvider>
+                            </Header>
+
+                            {/* Sider content */}
+
+                            <Content>
+                                <List style={{
+                                    backgroundColor: '#21152b'
+                                }}>
+                                    {messages.map(item => (
+                                        <Item key={uuid4()}>{item}</Item>
+                                    ))}
+                                </List>
+                            </Content>
+                        </Layout>
+                    </Sider>
+                </ConfigProvider>
+            </Layout>
+
+            {/* Footer block */}
+
             <ConfigProvider
                 theme={{
                     components: {

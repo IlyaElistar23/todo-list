@@ -19,6 +19,8 @@ const TodoList = ({
 }) => {
     const [edit, setEdit] = useState(null)
     const [editText, setEditText] = useState('')
+    const [completed, setCompleted] = useState(false)
+
     const { Item } = List;
     const { Text } = Typography;
 
@@ -61,6 +63,7 @@ const TodoList = ({
     }
     const toggleTodo = (id) => {
         setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo))
+        setCompleted(!completed)
         fetchToggle(id)
     }
 
@@ -91,6 +94,9 @@ const TodoList = ({
                             <Item key={todo.id}>
                                 {
                                     edit === todo.id ?
+
+                                        // Edit todo block
+
                                         <div className='edit-todo'>
                                             <ConfigProvider
                                                 theme={{
@@ -160,6 +166,9 @@ const TodoList = ({
                                             </ConfigProvider>
                                         </div>
                                         :
+
+                                        // Todo item block
+
                                         <div className='todo-item'>
                                             <ConfigProvider
                                                 theme={{
@@ -175,7 +184,7 @@ const TodoList = ({
                                                 }}
                                             >
                                                 <Checkbox
-                                                    checked={todo.completed}
+                                                    checked={completed}
                                                     type='text'
                                                     onClick={() => {
                                                         toggleTodo(todo.id)
@@ -188,7 +197,7 @@ const TodoList = ({
                                                     }}
                                                 >
                                                     <Text
-                                                        delete={todo.completed}
+                                                        delete={completed}
                                                     >
                                                         {todo.title}
                                                     </Text>
