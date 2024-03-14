@@ -11,7 +11,7 @@ import { v4 as uuid4 } from 'uuid'
 const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
 
     const [todos, setTodos] = useState([])
-    const [collapsed, setCollapsed] = useState(false)
+    const [collapsed, setCollapsed] = useState(true)
 
     const { Header, Content, Footer, Sider } = Layout
     const { Text } = Typography
