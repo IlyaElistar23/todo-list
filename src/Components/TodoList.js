@@ -19,7 +19,6 @@ const TodoList = ({
 }) => {
     const [edit, setEdit] = useState(null)
     const [editText, setEditText] = useState('')
-    const [completed, setCompleted] = useState(false)
 
     const { Item } = List;
     const { Text } = Typography;
@@ -62,8 +61,7 @@ const TodoList = ({
         fetchRemove(id)
     }
     const toggleTodo = (id) => {
-        setTodos(todos.map(todo => todo.id === id ? { ...todo, completed: !todo.completed } : todo))
-        setCompleted(!completed)
+        setTodos(todos.map(todo => todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo))
         fetchToggle(id)
     }
 
