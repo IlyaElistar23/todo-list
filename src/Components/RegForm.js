@@ -38,7 +38,7 @@ const RegForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
             setAlertProps({
                 type: 'error',
                 message: 'Ошибка!',
-                description: `${error.response.errors[0].msg}.`
+                description: `Проверьте правильность введенных данных.`
             })
         }
     }
