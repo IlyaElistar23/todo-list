@@ -184,12 +184,12 @@ const TodoList = ({
                                                 }}
                                             >
                                                 <Checkbox
-                                                    checked={completed}
+                                                    checked={todo.isCompleted}
                                                     type='text'
                                                     onClick={() => {
                                                         toggleTodo(todo.id)
                                                         alertWindow()
-                                                        if (todo.completed) {
+                                                        if (todo.isCompleted) {
                                                             toggleMessage(todo.title)
                                                         } else {
                                                             activateMessage(todo.title)
@@ -197,7 +197,7 @@ const TodoList = ({
                                                     }}
                                                 >
                                                     <Text
-                                                        delete={completed}
+                                                        delete={todo.isCompleted}
                                                     >
                                                         {todo.title}
                                                     </Text>
