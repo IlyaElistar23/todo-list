@@ -68,8 +68,13 @@ const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
                 }}
             >
                 <Header className='header'>
-                    <Button type='link' icon={<UnorderedListOutlined />} onClick={() => setCollapsed(!collapsed)}>History</Button>
-                    <Button type='link' onClick={logout} icon={<LogoutOutlined />}>Log out</Button>
+                    <Button
+                        type='link'
+                        icon={<UnorderedListOutlined />}
+                        onClick={() => setCollapsed(!collapsed)}>History</Button>
+                    <Button
+                        type='link'
+                        onClick={logout} icon={<LogoutOutlined />}>Log out</Button>
                 </Header>
             </ConfigProvider>
 
@@ -199,11 +204,15 @@ const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
                                         }
                                     }}
                                 >
-                                    <Button icon={<CloseOutlined />} onClick={() => setCollapsed(!collapsed)}></Button>
-                                    <Button icon={<ClearOutlined />} onClick={() => {
-                                        setMessages([])
-                                        localStorage.removeItem('messages')
-                                    }}></Button>
+                                    <Button
+                                        icon={<CloseOutlined />}
+                                        onClick={() => setCollapsed(!collapsed)}></Button>
+                                    <Button
+                                        icon={<ClearOutlined />}
+                                        onClick={() => {
+                                            setMessages([])
+                                            localStorage.removeItem('messages')
+                                        }}></Button>
                                 </ConfigProvider>
                             </Header>
 
