@@ -178,7 +178,8 @@ const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
                         collapsed={collapsed}
                         collapsedWidth={0}
                         style={{
-                            backgroundColor: '#21152b'
+                            backgroundColor: '#21152b',
+                            maxHeight: '805px'
                         }}>
                         <Layout>
 
