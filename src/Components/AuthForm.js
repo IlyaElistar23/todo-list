@@ -1,9 +1,14 @@
 import { useForm, Controller } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { Input, Button, Typography, Flex, ConfigProvider, Alert } from 'antd'
+import { EyeFilled, EyeInvisibleFilled } from '@ant-design/icons'
 import axios from 'axios'
 
 const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
+
+    const [passwordVisible, setPassswordVisible] = useState(false)
+
     const {
         handleSubmit,
         control,
@@ -16,6 +21,7 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
     })
 
     const { Text } = Typography
+    const { Password } = Input
 
     const navigate = useNavigate()
 
@@ -184,6 +190,8 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                                         colorTextPlaceholder: '#5c5c5c',
                                         controlHeightLG: 40,
                                         fontSize: 20,
+                                        colorIcon: 'white',
+                                        colorIconHover: '#892ad6'
                                     },
                                     components: {
                                         Input: {
@@ -196,7 +204,18 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                                     }
                                 }}
                             >
-                                <Input style={{ width: 400 }} {...field} placeholder='Example' />
+                                <Password
+                                    {...field}
+                                    style={{
+                                        width: 400
+                                    }}
+                                    placeholder='Example!1'
+                                    iconRender={(visible) => (visible ? <EyeFilled /> : <EyeInvisibleFilled />)}
+                                    visibilityToggle={{
+                                        visible: passwordVisible,
+                                        onVisibleChange: setPassswordVisible,
+                                    }}
+                                />
                             </ConfigProvider>
                         )}
                     />
@@ -231,13 +250,13 @@ const AuthForm = ({ alertWindow, showAlert, alertProps, setAlertProps }) => {
                             }
                         }}
                     >
-                        <Button 
-                        className='login' 
-                        htmlType='submit' 
-                        onClick={handleSubmit(onSubmit)}
-                        style={{
-                            marginTop: '50px'
-                        }}
+                        <Button
+                            className='login'
+                            htmlType='submit'
+                            onClick={handleSubmit(onSubmit)}
+                            style={{
+                                marginTop: '50px'
+                            }}
                         >Log In</Button>
                     </ConfigProvider>
                 </Flex>

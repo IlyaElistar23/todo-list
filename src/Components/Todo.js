@@ -168,9 +168,14 @@ const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
                             }
                         }
                     }}>
-                    <Sider width={300} collapsed={collapsed} collapsedWidth={0} style={{
-                        backgroundColor: '#21152b'
-                    }}>
+                    <Sider
+                        width={300}
+                        collapsed={collapsed}
+                        collapsedWidth={0}
+                        style={{
+                            backgroundColor: '#21152b',
+                            maxHeight: '805px'
+                        }}>
                         <Layout>
 
                             {/* Sider header */}
