@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ConfigProvider, Typography, Alert, Layout, Button, List, Modal } from 'antd'
+import { ConfigProvider, Typography, Alert, Layout, Button, List } from 'antd'
 import { UnorderedListOutlined, LogoutOutlined, CloseOutlined, ClearOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import AddTodo from './AddTodo'
