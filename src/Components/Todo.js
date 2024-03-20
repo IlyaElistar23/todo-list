@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ConfigProvider, Typography, Alert, Layout, Button, List } from 'antd'
+import { ConfigProvider, Typography, Alert, Layout, Button, List, Divider } from 'antd'
 import { UnorderedListOutlined, LogoutOutlined, CloseOutlined, ClearOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import AddTodo from './AddTodo'
@@ -7,6 +7,7 @@ import TodoList from './TodoList';
 import checkAuth from './HOC/checkAuth';
 import axios from 'axios';
 import { v4 as uuid4 } from 'uuid'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
 
@@ -162,14 +163,14 @@ const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
                 <ConfigProvider
                     theme={{
                         token: {
-                            colorText: 'white',
+                            colorText: 'black',
                             fontSize: 12
                         },
                         components: {
                             Layout: {
-                                headerBg: '#21152b',
-                                siderBg: '#21152b',
-                                footerBg: '#21152b'
+                                headerBg: 'transparent',
+                                siderBg: 'transparent',
+                                footerBg: 'transparent'
                             }
                         }
                     }}>
@@ -177,27 +178,24 @@ const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
                         width={300}
                         collapsed={collapsed}
                         collapsedWidth={0}
-                        style={{
-                            backgroundColor: '#21152b',
-                            maxHeight: '805px'
-                        }}>
+                    >
                         <Layout>
 
                             {/* Sider header */}
 
                             <Header style={{
                                 display: 'flex',
-                                alignItems: 'center',
+                                alignItems: 'self-end',
                                 justifyContent: 'space-evenly'
                             }}>
                                 <ConfigProvider
                                     theme={{
                                         components: {
                                             Button: {
-                                                defaultBg: '#21152b',
+                                                defaultBg: 'transparent',
                                                 defaultBorderColor: '#21152b',
-                                                defaultHoverBg: '#21152b',
-                                                defaultHoverBorderColor: '#21152b',
+                                                defaultHoverBg: 'transparent',
+                                                defaultHoverBorderColor: '#892ad6',
                                                 defaultHoverColor: '#892ad6',
                                                 onlyIconSize: 18
                                             }
@@ -216,16 +214,27 @@ const Todo = ({ token, alertWindow, showAlert, messages, setMessages }) => {
                                 </ConfigProvider>
                             </Header>
 
+                            <Divider />
+
                             {/* Sider content */}
 
-                            <Content>
-                                <List style={{
-                                    backgroundColor: '#21152b'
-                                }}>
-                                    {messages.map(item => (
-                                        <Item key={uuid4()}>{item}</Item>
-                                    ))}
-                                </List>
+                            <Content
+                                style={{
+                                    overflow: 'auto',
+                                    height: '690px'
+                                }}
+                            >
+                                <InfiniteScroll
+                                    dataLength={messages.length}
+                                >
+                                    <List style={{
+                                        backgroundColor: 'transparent',
+                                    }}>
+                                        {messages.map(item => (
+                                            <Item key={uuid4()}>{item}</Item>
+                                        ))}
+                                    </List>
+                                </InfiniteScroll>
                             </Content>
                         </Layout>
                     </Sider>
