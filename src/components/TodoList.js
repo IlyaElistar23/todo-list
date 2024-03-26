@@ -54,10 +54,13 @@ const TodoList = ({
                         >
                             {
                                 todo.isEditing ?
-                                    <ListItem style={{
-                                        width: 635,
-                                        marginBottom: '15px'
-                                    }}>
+                                    <ListItem
+                                        style={{
+                                            width: 635,
+                                            marginBottom: '15px'
+                                        }}
+                                        key={todo.id}
+                                    >
                                         <Input
                                             className='input-add'
                                             value={editTitle}
