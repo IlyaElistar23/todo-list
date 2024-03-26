@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { removeTodo, completedTodo, editTodo, saveTodo } from '../redux/actions/listAction'
+import { editForm } from '../redux/actions/editFormAction'
 import Form from './Form'
 
 import { List, ListItem, Typography, Button, Checkbox, Stack, Box, Input } from '@mui/material'
@@ -7,6 +8,7 @@ import { List, ListItem, Typography, Button, Checkbox, Stack, Box, Input } from 
 const Users = () => {
 
     const { todos } = useSelector(state => state.list)
+    const { editTitle } = useSelector(state => state.editForm)
     const dispatch = useDispatch()
 
     return (
@@ -20,14 +22,14 @@ const Users = () => {
                             {
                                 todo.isEditing ?
                                     <>
-                                        <Input/>
-                                        <Button>Сохранить</Button>
+                                        <Input value={editTitle} onChange={(e) => dispatch(editForm(e.target.value))}/>
+                                        <Button onClick={() => dispatch(saveTodo(todo, editTitle))}>Сохранить</Button>
                                     </>
                                     :
                                     <ListItem key={todo.id}>
                                         <Checkbox onClick={() => dispatch(completedTodo(todo))} />
                                         <Typography variant='body1' style={{ textDecoration: todo.isCompleted && 'line-through' }}>{todo.title}</Typography>
-                                        <Button onClick={() => dispatch(editTodo(todo))}>Изменить</Button>
+                                        <Button onClick={() => {dispatch(editTodo(todo))}}>Изменить</Button>
                                         <Button onClick={() => dispatch(removeTodo(todo))}>Удалить</Button>
                                     </ListItem>
                             }

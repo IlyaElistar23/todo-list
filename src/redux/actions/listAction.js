@@ -32,9 +32,12 @@ export const editTodo = (todo) => {
     }
 }
 
-export const saveTodo = (todo) => {
+export const saveTodo = (todo, editTitle) => {
     return {
         type: SAVE_TODO,
-        payload: todo.id
+        payload: {
+            id: todo.id,
+            title: editTitle
+        }
     }
 }
