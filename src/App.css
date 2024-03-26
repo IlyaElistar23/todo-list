@@ -1,38 +1,117 @@
-.App {
-  text-align: center;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #21152b;
+  height: 65px;
+  padding-right: 50px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.todo {
+  background-color: #892ad6;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  padding: 30px;
+  min-height: 804px;
 }
 
-.App-body {
+.title {
+  margin-bottom: 30px;
+}
+
+/* .home {
+  background-color: #892ad6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  height: 94vh;
+} */
+
+/* form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 40px;
+  margin: 75px 200px;
+  text-align: center;
+  background-color: #21152b;
+  height: 50%;
+  width: 30%;
+  opacity: 95%;
+} */
+
+.todo-background {
+  border-radius: 10px;
+  padding: 40px 40px 50px 40px;
+  margin: 100px 200px 200px;
+  text-align: center;
+  background-color: #21152b;
+}
+
+.label-auth {
+  margin-bottom: 20px;
+}
+
+.add-todo {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.input-add {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #892ad6;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #892ad6;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.edit-buttons {
   display: flex;
 }
 
-button {
-  height: 50px;
-  width: 200px;
-  font-size: 20px;
-  border-radius: 10px;
-  border-width: 1px;
-  border-color: #457077;
-  margin: 10px;
-  background: #457077;
-  color: tomato;
+.todo-info {
+  display: flex;
+  align-items: center;
 }
 
-/* ul {
-  list-style: none;
+.edit-todo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 635px;
 }
 
-li {
-  border: 1px solid tomato;
-} */
+.console {
+  margin-top: 45px;
+}
+
+.label-reg {
+  min-width: 150px;
+  text-align: left;
+}
+
+.error-text {
+  margin: 20px;
+}
+
+footer {
+  background-color: #21152b;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}

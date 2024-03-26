@@ -1,5 +1,4 @@
 export const ADD_TITLE = 'ADD_TITLE'
-export const EDIT_TITLE = 'EDIT_TITLE'
 
 export const addTitle = (title) => {
     return {
